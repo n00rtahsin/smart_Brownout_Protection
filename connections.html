@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="MD Nazmun Nur">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart AC Guard - Wiring Connections</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            margin: 0;
+        }
+        .container {
+            background: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            max-width: 850px;
+            width: 100%;
+            animation: fadeInUp 560ms ease both;
+        }
+        h2 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-top: 0;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        th {
+            background-color: #f1f3f5;
+            color: #495057;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:hover {
+            background-color: #f8f9fa;
+            transform: translateY(-4px);
+            transition: transform 160ms ease, background-color 160ms ease;
+        }
+        .component-name {
+            font-weight: 600;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .pin-nano {
+            background-color: #e3f2fd;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            color: #1976d2;
+            display: inline-block;
+            transition: transform 180ms ease, box-shadow 180ms ease;
+        }
+        .pin-comp {
+            background-color: #fef4e5;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            color: #d35400;
+            display: inline-block;
+            transition: transform 180ms ease, box-shadow 180ms ease;
+        }
+        .power-pin {
+            color: #c0392b;
+            background-color: #fadbd8;
+            animation: pulse 2.6s ease-in-out infinite;
+        }
+        .gnd-pin {
+            color: #27ae60;
+            background-color: #d5f5e3;
+        }
+        /* Subtle reveal animation for rows */
+        tbody tr {
+            opacity: 0;
+            transform: translateY(8px);
+            animation: fadeInUp 520ms ease forwards;
+        }
+        tbody tr:nth-child(1)  { animation-delay: 0.04s; }
+        tbody tr:nth-child(2)  { animation-delay: 0.08s; }
+        tbody tr:nth-child(3)  { animation-delay: 0.12s; }
+        tbody tr:nth-child(4)  { animation-delay: 0.16s; }
+        tbody tr:nth-child(5)  { animation-delay: 0.20s; }
+        tbody tr:nth-child(6)  { animation-delay: 0.24s; }
+        tbody tr:nth-child(7)  { animation-delay: 0.28s; }
+        tbody tr:nth-child(8)  { animation-delay: 0.32s; }
+        tbody tr:nth-child(9)  { animation-delay: 0.36s; }
+        tbody tr:nth-child(10) { animation-delay: 0.40s; }
+        tbody tr:nth-child(11) { animation-delay: 0.44s; }
+        tbody tr:nth-child(12) { animation-delay: 0.48s; }
+        tbody tr:nth-child(13) { animation-delay: 0.52s; }
+        tbody tr:nth-child(14) { animation-delay: 0.56s; }
+        .notes {
+            font-size: 0.9em;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        /* Keyframes */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(192,57,43,0.45); }
+            70% { box-shadow: 0 0 0 12px rgba(192,57,43,0); }
+            100% { box-shadow: none; }
+        }
+
+        /* Header underline decorative */
+        h2 { position: relative; }
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0.9);
+            bottom: -18px;
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(90deg,#3498db,#8e44ad);
+            border-radius: 3px;
+            opacity: 0;
+            transition: opacity 360ms ease, transform 360ms ease;
+        }
+        .container:hover h2::after { opacity: 1; transform: translateX(-50%) scaleX(1); }
+
+        /* Footer */
+        .site-footer {
+            max-width: 850px;
+            margin: 18px auto 8px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9em;
+            opacity: 0;
+            animation: fadeInUp 520ms ease 0.9s forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>⚡ Smart Brownout Protection  - Hardware Pinout</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Component</th>
+                    <th>Component Pin</th>
+                    <th>Arduino Nano Pin</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- ZMPT101B Sensor -->
+                <tr>
+                    <td class="component-name" rowspan="3">ZMPT101B Voltage Sensor</td>
+                    <td><span class="pin-comp">OUT</span></td>
+                    <td><span class="pin-nano">A2</span></td>
+                    <td class="notes">Analog voltage signal</td>
+                </tr>
+                <tr>
+                    <td><span class="pin-comp power-pin">VCC</span></td>
+                    <td><span class="pin-nano power-pin">5V</span></td>
+                    <td class="notes">Power supply</td>
+                </tr>
+                <tr>
+                    <td><span class="pin-comp gnd-pin">GND</span></td>
+                    <td><span class="pin-nano gnd-pin">GND</span></td>
+                    <td class="notes">Common ground</td>
+                </tr>
+
+                <!-- OLED Display -->
+                <tr>
+                    <td class="component-name" rowspan="4">SSD1306 OLED (I2C)</td>
+                    <td><span class="pin-comp">SDA</span></td>
+                    <td><span class="pin-nano">A4</span></td>
+                    <td class="notes">I2C Data line</td>
+                </tr>
+                <tr>
+                    <td><span class="pin-comp">SCL</span></td>
+                    <td><span class="pin-nano">A5</span></td>
+                    <td class="notes">I2C Clock line</td>
+                </tr>
+                <tr>
+                    <td><span class="pin-comp power-pin">VCC</span></td>
+                    <td><span class="pin-nano power-pin">5V</span></td>
+                    <td class="notes">Power supply</td>
+                </tr>
+                <tr>
+                    <td><span class="pin-comp gnd-pin">GND</span></td>
+                    <td><span class="pin-nano gnd-pin">GND</span></td>
+                    <td class="notes">Common ground</td>
+                </tr>
+
+                <!-- Relay Module -->
+                <tr>
+                    <td class="component-name" rowspan="3">5V Relay Module</td>
+                    <td><span class="pin-comp">IN</span></td>
+                    <td><span class="pin-nano">D2</span></td>
+                    <td class="notes">Active-Low trigger signal</td>
+                </tr>
+                <tr>
+                    <td><span class="pin-comp power-pin">VCC</span></td>
+                    <td><span class="pin-nano power-pin">5V</span></td>
+                    <td class="notes">Relay coil power</td>
+                </tr>
+                <tr>
+                    <td><span class="pin-comp gnd-pin">GND</span></td>
+                    <td><span class="pin-nano gnd-pin">GND</span></td>
+                    <td class="notes">Common ground</td>
+                </tr>
+
+                <!-- Buzzer -->
+                <tr>
+                    <td class="component-name" rowspan="2">Passive Buzzer</td>
+                    <td><span class="pin-comp">Positive (+)</span></td>
+                    <td><span class="pin-nano">D5</span></td>
+                    <td class="notes">PWM tone signal</td>
+                </tr>
+                <tr>
+                    <td><span class="pin-comp gnd-pin">Negative (-)</span></td>
+                    <td><span class="pin-nano gnd-pin">GND</span></td>
+                    <td class="notes">Common ground</td>
+                </tr>
+
+                <!-- Push Button -->
+                <tr>
+                    <td class="component-name" rowspan="2">Fault Simulation Button</td>
+                    <td><span class="pin-comp">Terminal 1</span></td>
+                    <td><span class="pin-nano">D7</span></td>
+                    <td class="notes">Uses internal pull-up resistor</td>
+                </tr>
+                <tr>
+                    <td><span class="pin-comp gnd-pin">Terminal 2</span></td>
+                    <td><span class="pin-nano gnd-pin">GND</span></td>
+                    <td class="notes">Pulls D7 LOW when pressed</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+   
+
+</body>
+</html>
